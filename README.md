@@ -2,7 +2,6 @@
 
 # input
  - String format: ID Value \n
- - 
 
 # log
  - Time, Value1, Value2, ...
@@ -18,6 +17,6 @@
  - Capacitor Voltage
  - Tank Pressure
  - Fuel Cell Pressure
- - 
+
  
 
