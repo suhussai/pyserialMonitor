@@ -12,6 +12,7 @@ def signal_handler(signal, frame):
     sys.exit(0)
 
 def setupSerial(portName, baudrate):
+    # https://pyserial.readthedocs.org/en/latest/shortintro.html
     ser = serial.Serial()
     ser.baudrate = baudrate
     ser.port = portName
@@ -20,6 +21,7 @@ def setupSerial(portName, baudrate):
     return ser
 
 def displayValues(myscreen):
+    # http://www.tuxradar.com/content/code-project-build-ncurses-ui-python#null
     myscreen.addstr(1, 2, "Values Monitored")
     index = 2
     for ID, value in Values_To_Montior.iteritems():
@@ -44,7 +46,8 @@ def updateValues(ser, Values_To_Montior):
     line = ser.readline() # read line
     if len(line) > 0:
         (ID, value) = line.split() # get id and value
-        
+        # http://www.tutorialspoint.com/python/python_dictionary.htm
+        # http://stackoverflow.com/questions/3294889/iterating-over-dictionaries-using-for-loops-in-python
         if (Values_To_Montior.get(ID, None) is not None): 
             Values_To_Montior[ID] = value # update dict if necessary
             
@@ -53,6 +56,7 @@ def updateValues(ser, Values_To_Montior):
     
 
 def setupFileHandler(fileName):
+    #http://www.tutorialspoint.com/python/python_files_io.htm
     fileHandler = open(fileName, "w+")
     # FCTEMP2:-1, TANKPRES:-1, FCTEMP1:-1, AMTEMP2:-1, AMTEMP1:-1, ERROR:-1, FCPRES:-1, FCVOLT:-1, FCCURR:-1, CAPCURR:-1
     fileHandler.write("Time, FCTEMP2, TANKPRES, FCTEMP1, AMTEMP2, AMTEMP1, ERROR, FCPRES, FCVOLT, FCCURR, CAPCURR\n")
@@ -61,6 +65,7 @@ def teardownFileHandler(fileHandler):
     fileHandler.close()
 
 def writeToLog(fileHandler, Values_To_Montior):
+    #http://www.tutorialspoint.com/python/python_date_time.htm
     message = str(time.asctime(time.localtime(time.time()))) + " "
     for ID, value in Values_To_Montior.iteritems():
         message +=  "%d, " % (int(value))
@@ -98,7 +103,8 @@ while True:
         Values_To_Montior = updateValues(ser, Values_To_Montior)
         displayValues(myscreen)
         writeToLog(fileHandler, Values_To_Montior)
-        time.sleep(refresh_rate)
+        # http://www.tutorialspoint.com/python/time_sleep.htm
+        time.sleep(refresh_rate) 
         # press Ctrl-C to get out of loop, 
         #SIGINT handler implemented
     except:
@@ -108,6 +114,7 @@ while True:
         sys.exit(0)
 
 #### Arduino Code
+#### http://electronics.stackexchange.com/questions/87868/data-lost-writing-on-arduino-serial-port-overflow
 # void setup(){
 #   Serial.begin(9600);
 # }
