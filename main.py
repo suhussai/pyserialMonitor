@@ -106,3 +106,14 @@ while True:
         teardownSerial(ser)
         teardownFileHandler(fileHandler)
         sys.exit(0)
+
+#### Arduino Code
+# void setup(){
+#   Serial.begin(9600);
+# }
+
+# void loop(){
+#   Serial.println("FCTEMP2 20");   
+#   Serial.flush();
+#   delay(1000);
+# }
